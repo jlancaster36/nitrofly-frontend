@@ -1,1 +1,2 @@
-def getMetadata()
+def getMetadata():
+    print('');
