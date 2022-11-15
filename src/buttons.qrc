@@ -1,0 +1,11 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>add-icon.png</file>
+    <file>file-icon.jpeg</file>
+    <file>file-icon.png</file>
+    <file>cog.png</file>
+    <file>white-menu.png</file>
+    <file>dots-menu.png</file>
+    <file>menu-rounded.png</file>
+  </qresource>
+</RCC>

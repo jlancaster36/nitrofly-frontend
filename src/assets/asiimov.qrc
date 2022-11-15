@@ -1,0 +1,7 @@
+<RCC>
+  <qresource prefix="newPrefix">
+    <file>GCNicon.png</file>
+    <file>asiimov.jpg</file>
+    <file>asiimov2.png</file>
+  </qresource>
+</RCC>
