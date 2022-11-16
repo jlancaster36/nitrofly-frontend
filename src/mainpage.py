@@ -12,17 +12,15 @@
 import sys
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
+from PyQt5.QtMultimediaWidgets import QVideoWidget
+from PyQt5.QtCore import QDir, Qt, QUrl
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(800, 600)
-#         MainWindow.setStyleSheet("#MainWindow {\n"
-# "background-image: url(:/newPrefix/asiimov.png);\n"
-# "background-repeat: no-repeat; \n"
-# "background-position: center;\n"
-# "}")
+
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setStyleSheet("#centralwidget{border-image: url(assets/asiimov2.png);}")
         self.centralwidget.setObjectName("centralwidget")
@@ -45,12 +43,12 @@ class Ui_MainWindow(object):
         self.verticalLayout.setContentsMargins(-1, 12, -1, -1)
         self.verticalLayout.setObjectName("verticalLayout")
 
+        #Setting up Console Select scroll Area
         self.scrollArea_2 = QtWidgets.QScrollArea(self.consoleSelect)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.scrollArea_2.sizePolicy().hasHeightForWidth())
-
         self.scrollArea_2.setSizePolicy(sizePolicy)
         self.scrollArea_2.setStyleSheet("background: transparent;")
         self.scrollArea_2.setWidgetResizable(True)
@@ -61,24 +59,31 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
+
         self.pushButton = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
-        self.pushButton.setStyleSheet("qproperty-icon: url(assets/buttons/add-icon.png) ;")
+        self.pushButton.setStyleSheet(
+                        "QPushButton{qproperty-icon: url(assets/buttons/add-icon.png);}" 
+                        "QPushButton::hover {background-color : rgba(0, 0, 0, .5);}")
         self.pushButton.setText("")
         self.pushButton.setIconSize(QtCore.QSize(32, 32))
-        self.pushButton.setObjectName("pushButton")
+        # self.pushButton.clicked.connect(self.add_click(self.pushButton))
         self.verticalLayout_4.addWidget(self.pushButton, 0, QtCore.Qt.AlignVCenter)
+
         self.scrollArea_2.setWidget(self.scrollAreaWidgetContents)
         self.verticalLayout.addWidget(self.scrollArea_2, 0, QtCore.Qt.AlignTop)
         self.horizontalLayout_3.addWidget(self.consoleSelect)
+
         self.gameSelect = QtWidgets.QFrame(self.centralwidget)
         self.gameSelect.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.gameSelect.setFrameShadow(QtWidgets.QFrame.Raised)
         self.gameSelect.setObjectName("gameSelect")
         self.gameSelect.setStyleSheet("border:0;")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.gameSelect)
+
         self.verticalLayout_3.setContentsMargins(6, 0, 6, 0)
         self.verticalLayout_3.setSpacing(0)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
+
         self.subtoolbar = QtWidgets.QFrame(self.gameSelect)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
@@ -154,13 +159,16 @@ class Ui_MainWindow(object):
         self.media.setFrameShadow(QtWidgets.QFrame.Raised)
         self.media.setObjectName("media")
         self.horizontalLayout.addWidget(self.media)
+
         self.rightText = QtWidgets.QFrame(self.gameMarquee)
         self.rightText.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.rightText.setFrameShadow(QtWidgets.QFrame.Raised)
         self.rightText.setObjectName("rightText")
         self.horizontalLayout.addWidget(self.rightText)
+
         self.verticalLayout_3.addWidget(self.gameMarquee)
         self.scrollArea = QtWidgets.QScrollArea(self.gameSelect)
+
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -178,12 +186,14 @@ class Ui_MainWindow(object):
         self.scrollAreaWidgetContents_2.setObjectName("scrollAreaWidgetContents_2")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents_2)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
+
         self.gameGrid = QtWidgets.QGridLayout()
         self.gameGrid.setObjectName("gameGrid")
         self.verticalLayout_2.addLayout(self.gameGrid)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents_2)
         self.verticalLayout_3.addWidget(self.scrollArea)
         self.horizontalLayout_3.addWidget(self.gameSelect)
+
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -192,9 +202,48 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+        self.mediaPlayer = QMediaPlayer(None, QMediaPlayer.VideoSurface)
+        videoWidget = QVideoWidget(self.media)
+        self.mediaPlayer.setVideoOutput(videoWidget)
+
+
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+
+    def breath_button(self, button):
+        # anim = QtCore.QPropertyAnimation(button, b"geomtery")
+        # anim.setDuration(100)
+        # anim.setStartValue(QtCore.QRect(awidth=32, aheight=32))
+        # anim.setEndValue(QtCore.QRect(awidth=48, aheight=48))
+        # anim.start()
+
+        # anim = QtCore.QPropertyAnimation(button, b"geomtery")
+        # anim.setDuration(100)
+        # anim.setStartValue(QtCore.QRect(awidth=48, aheight=48))
+        # anim.setEndValue(QtCore.QRect(awidth=32, aheight=32))
+        # anim.start()
+        pass
+
+    def slide(self):
+        pass
+
+    def populate_consoles(self):
+        pass
+    
+    def populate_gallery(self, filter):
+        pass
+
+    def add_click(self, button):
+        print("Add Clicked")
+        self.breath_button(button)
+
+    def setup_video(self, fileName):
+        fileName, _ = QtWidgets.QFileDialog.getOpenFileName(self, "Open Movie",
+                QDir.homePath())
+
+        if fileName != '':
+            self.mediaPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(fileName)))
 
 
 if __name__ == '__main__':
