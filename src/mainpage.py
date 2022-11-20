@@ -14,7 +14,7 @@ import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
 from PyQt5.QtMultimediaWidgets import QVideoWidget
-from PyQt5.QtCore import QDir, Qt, QUrl
+from PyQt5.QtCore import QDir, Qt, QUrl, QSize
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -66,7 +66,8 @@ class Ui_MainWindow(object):
                         "QPushButton::hover {background-color : rgba(0, 0, 0, .5);}")
         self.pushButton.setText("")
         self.pushButton.setIconSize(QtCore.QSize(32, 32))
-        # self.pushButton.clicked.connect(self.add_click(self.pushButton))
+        self.mediaPlayer = QMediaPlayer(None, QMediaPlayer.VideoSurface)
+        # self.pushButton.clicked.connect(lambda: self.setup_video(r"/Fire Emblem - Awakening (USA) Decrypted.mp4"))
         self.verticalLayout_4.addWidget(self.pushButton, 0, QtCore.Qt.AlignVCenter)
 
         self.scrollArea_2.setWidget(self.scrollAreaWidgetContents)
@@ -202,9 +203,33 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+        
+        ###### Imported video code
+        
         self.mediaPlayer = QMediaPlayer(None, QMediaPlayer.VideoSurface)
-        videoWidget = QVideoWidget(self.media)
+        videoWidget = QVideoWidget()
+        # path = QDir.currentPath() + "/metadata/videos"
+        fileName = "C:/Projects/ROM DUMP/3DS/3DSmedia/videos/Pokemon Alpha Sapphire (USA) (En,Ja,Fr,De,Es,It,Ko) (Rev 2) Decrypted.mp4"
+        print(fileName)
+
+        if fileName != '':
+            self.mediaPlayer.setMedia(
+                    QMediaContent(QUrl.fromLocalFile(fileName)))
+            # self.mediaPlayer.play()
+ 
+        # videoWrapper = QtWidgets.QVBoxLayout()
+
+        widget = QtWidgets.QWidget(self.media)
+ 
+        layout = QtWidgets.QVBoxLayout()
+        layout.addWidget(videoWidget)
+ 
+        widget.setLayout(layout)
         self.mediaPlayer.setVideoOutput(videoWidget)
+        self.mediaPlayer.setParent(videoWidget)
+        videoWidget.setAspectRatioMode(0)
+        # videoWidget.resize(w = )
+        self.mediaPlayer.play()
 
 
     def retranslateUi(self, MainWindow):
@@ -239,11 +264,11 @@ class Ui_MainWindow(object):
         self.breath_button(button)
 
     def setup_video(self, fileName):
-        fileName, _ = QtWidgets.QFileDialog.getOpenFileName(self, "Open Movie",
-                QDir.homePath())
-
+        path = QDir.currentPath() + "/metadata/videos"
         if fileName != '':
-            self.mediaPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(fileName)))
+            print(path + fileName)
+            self.mediaPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(path + fileName)))
+            self.mediaPlayer.play()
 
 
 if __name__ == '__main__':

@@ -2,7 +2,7 @@ from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
 from PyQt5.QtMultimediaWidgets import QVideoWidget
 
 def getMetadata():
-    print('');
+    print('')
 
 def get_media(title):
     pass
