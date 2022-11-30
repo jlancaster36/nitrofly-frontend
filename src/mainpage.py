@@ -9,6 +9,8 @@
 
 # from assets import asiimov_rc
 # import buttons_rc
+import os
+import pathlib
 import sys
 
 from PyQt5 import QtCore, QtGui, QtWidgets
@@ -134,9 +136,9 @@ class Ui_MainWindow(object):
         self.emulators.setObjectName("emulators")
         self.horizontalLayout_5.addWidget(self.emulators)
 
-        self.verticalLayout_3.addWidget(self.subtoolbar)
+        self.verticalLayout_3.addWidget(self.subtoolbar,1)
         self.gameMarquee = QtWidgets.QFrame(self.gameSelect)
-        self.gameMarquee.setMaximumSize(QtCore.QSize(16777215, 175))
+        self.gameMarquee.setMaximumSize(QtCore.QSize(16777215, 16777215))
         self.gameMarquee.setAutoFillBackground(False)
         self.gameMarquee.setStyleSheet("#gameMarquee{\n"
 "    background-color: rgba(0,0,0, .6);\n"
@@ -167,7 +169,7 @@ class Ui_MainWindow(object):
         self.rightText.setObjectName("rightText")
         self.horizontalLayout.addWidget(self.rightText)
 
-        self.verticalLayout_3.addWidget(self.gameMarquee)
+        self.verticalLayout_3.addWidget(self.gameMarquee,3)
         self.scrollArea = QtWidgets.QScrollArea(self.gameSelect)
 
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
@@ -192,7 +194,7 @@ class Ui_MainWindow(object):
         self.gameGrid.setObjectName("gameGrid")
         self.verticalLayout_2.addLayout(self.gameGrid)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents_2)
-        self.verticalLayout_3.addWidget(self.scrollArea)
+        self.verticalLayout_3.addWidget(self.scrollArea,6)
         self.horizontalLayout_3.addWidget(self.gameSelect)
 
         MainWindow.setCentralWidget(self.centralwidget)
@@ -208,14 +210,14 @@ class Ui_MainWindow(object):
         
         self.mediaPlayer = QMediaPlayer(None, QMediaPlayer.VideoSurface)
         videoWidget = QVideoWidget()
-        # path = QDir.currentPath() + "/metadata/videos"
-        fileName = "C:/Projects/ROM DUMP/3DS/3DSmedia/videos/Pokemon Alpha Sapphire (USA) (En,Ja,Fr,De,Es,It,Ko) (Rev 2) Decrypted.mp4"
-        print(fileName)
+        path = os.path.dirname(os.path.abspath(__file__))
+        # fileName = "C:/Projects/ROM DUMP/3DS/3DSmedia/videos/Pokemon Alpha Sapphire (USA) (En,Ja,Fr,De,Es,It,Ko) (Rev 2) Decrypted.mp4"
+        fileName = path
+        print(path)
 
         if fileName != '':
-            self.mediaPlayer.setMedia(
-                    QMediaContent(QUrl.fromLocalFile(fileName)))
-            # self.mediaPlayer.play()
+            self.mediaPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(fileName)))
+            self.mediaPlayer.play()
  
         # videoWrapper = QtWidgets.QVBoxLayout()
 
@@ -277,5 +279,5 @@ if __name__ == '__main__':
     w = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(w)
-    w.show()
+    w.showMaximized()
     sys.exit(app.exec_())
