@@ -78,11 +78,11 @@ class VideoPlayer(QWidget):
         self.counter = 0
         # self.resizeContent()
 
-    def play(self):
+    def play(self, path="C:/Projects/ROM DUMP/3DS/3DSmedia/videos/Pokemon Alpha Sapphire (USA) (En,Ja,Fr,De,Es,It,Ko) (Rev 2) Decrypted.mp4"):
         if self.mediaPlayer.state() == QMediaPlayer.PlayingState:
             pass
         else:
-            self.mediaPlayer.setMedia(QMediaContent(QUrl.fromLocalFile('/Users/lancaster/Documents/Nitrofly/nitrofly-frontend/src/test.mp4')))
+            self.mediaPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(path)))
             self.mediaPlayer.play()
             self.counter += 1
     

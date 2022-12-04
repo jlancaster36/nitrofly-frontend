@@ -165,7 +165,7 @@ class Ui_MainWindow(object):
         self.media.setFrameShadow(QtWidgets.QFrame.Raised)
         self.media.setObjectName("media")
         self.media.setStyleSheet("border:0;")
-        self.horizontalLayout.addWidget(self.media,5)
+        self.horizontalLayout.addWidget(self.media,4)
 
         self.rightText = QtWidgets.QFrame(self.gameMarquee)
         self.rightText.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -216,7 +216,7 @@ class Ui_MainWindow(object):
         # fileName = "C:/Projects/ROM DUMP/3DS/3DSmedia/videos/Pokemon Alpha Sapphire (USA) (En,Ja,Fr,De,Es,It,Ko) (Rev 2) Decrypted.mp4"
         fileName = path
         print(path)
-        path = "/Users/lancaster/Documents/Nitrofly/nitrofly-frontend/src/test.mp4"
+        # path = "/Users/lancaster/Documents/Nitrofly/nitrofly-frontend/src/test.mp4"
 
         # if fileName != '':
         #     self.mediaPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(fileName)))
@@ -292,7 +292,7 @@ if __name__ == '__main__':
     w = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(w)
-    w.show()
+    w.showMaximized()
     # t = threading.Thread(target = ui.videos.resizeContent)
     # t.start()
     sys.exit(app.exec_())
