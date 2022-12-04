@@ -1,0 +1,40 @@
+{
+    "SNES": {
+        "active": false
+    },
+
+    "N64": {
+        "active": false
+    },
+
+    "GCN": {
+        "active": true,
+        "image": "assets/consoleIcons/GCNicon.png",
+        "emu": "None",
+        "rom_path": "None"
+    },
+
+    "WII": {
+        "active": false
+    },
+
+    "GBA": {
+        "active": false
+    },
+
+    "DS3": {
+        "active": false
+    },
+
+    "PSP": {
+        "active": false
+    },
+
+    "PS1": {
+        "active": false
+    },
+
+    "PS2": {
+        "active": false
+    }
+}
