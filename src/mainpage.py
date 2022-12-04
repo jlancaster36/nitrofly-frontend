@@ -13,6 +13,7 @@ import os
 import pathlib
 import sys
 import threading
+import json
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
 from PyQt5.QtMultimediaWidgets import QVideoWidget
@@ -251,6 +252,15 @@ class Ui_MainWindow(object):
         pass
 
     def populate_consoles(self):
+        with open("console.json", "r") as file:
+            consoles = json.load(file)
+        
+        for console in consoles:
+            if console["active"] != "true":
+                continue
+            
+            
+
         pass
     
     def populate_gallery(self, filter):

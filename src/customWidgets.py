@@ -16,7 +16,7 @@ class Console(Enum):
     WII  = 4
     GBA  = 5
     NDS  = 6
-    _3DS = 7
+    DS3  = 7
     PSP  = 8
     PS1  = 9
     PS2  = 10
@@ -79,10 +79,12 @@ class VideoPlayer(QWidget):
         # self.resizeContent()
 
     def play(self):
+        path = os.path.dirname(os.path.abspath(__file__)) + "/metadata/3DSmedia/videos/Fire Emblem - Awakening (USA) Decrypted.mp4"
         if self.mediaPlayer.state() == QMediaPlayer.PlayingState:
             pass
         else:
-            self.mediaPlayer.setMedia(QMediaContent(QUrl.fromLocalFile('/Users/lancaster/Documents/Nitrofly/nitrofly-frontend/src/test.mp4')))
+            # self.mediaPlayer.setMedia(QMediaContent(QUrl.fromLocalFile('/Users/lancaster/Documents/Nitrofly/nitrofly-frontend/src/test.mp4')))
+            self.mediaPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(path)))
             self.mediaPlayer.play()
             self.counter += 1
     
@@ -101,6 +103,7 @@ class VideoPlayer(QWidget):
         self.graphicsView.fitInView(self.videoItem, Qt.KeepAspectRatio)
         # self.videoItem.setSize(QSizeF(self.parent.geometry().width(), self.parent.geometry().height()))
         self.graphicsView.centerOn(bounds.center())
+
         self.play()
 
     # def resizeEvent(self, a0: QResizeEvent) -> None:
