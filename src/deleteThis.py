@@ -2,34 +2,29 @@ from PyQt5.QtCore import QDir, Qt, QUrl
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
 from PyQt5.QtMultimediaWidgets import QVideoWidget
 from PyQt5.QtWidgets import (QMainWindow, QWidget, QPushButton, QApplication,
-                             QLabel, QFileDialog, QStyle, QVBoxLayout)
+                             QLabel, QFileDialog, QStyle, QVBoxLayout, QFrame)
 import sys
+import glob
 
-class VideoPlayer(QMainWindow):
+class VideoWindow(QMainWindow):
     def __init__(self):
-        super().__init__()
-        self.setWindowTitle("PyQt5 Video Player") 
- 
+        super(VideoWindow, self).__init__()
+        self.setWindowTitle('QMediaPlayer TEST')
+        self.resize(640, 480)
+
+         # QMediaPlayer
         self.mediaPlayer = QMediaPlayer(None, QMediaPlayer.VideoSurface)
-        videoWidget = QVideoWidget()
-        path = QDir.currentPath() + "/metadata/videos"
-        fileName = "C:/Projects/ROM DUMP/3DS/3DSmedia/videos/Pokemon Alpha Sapphire (USA) (En,Ja,Fr,De,Es,It,Ko) (Rev 2) Decrypted.mp4"
- 
-        print(fileName)
-        if fileName != '':
-            self.mediaPlayer.setMedia(
-                    QMediaContent(QUrl.fromLocalFile(fileName)))
-            self.mediaPlayer.play()
- 
-        widget = QWidget(self)
-        self.setCentralWidget(widget)
- 
-        layout = QVBoxLayout()
-        layout.addWidget(videoWidget)
- 
-        widget.setLayout(layout)
-        self.mediaPlayer.setVideoOutput(videoWidget)
- 
+        self.mediaPlayer.setMedia(QMediaContent(QUrl.fromLocalFile('/Users/lancaster/Documents/Nitrofly/nitrofly-frontend/src/test.mp4')))
+
+         # Set widget
+        self.wrapperLayout = QVBoxLayout()
+        self.videoWidget = QVideoWidget(self.wrapperLayout)
+        self.videoWidget.setGeometry(self.pos().x(), self.pos().y(), self.width(), self.height())
+        self.setCentralWidget(self.wrapperLayout)
+        self.mediaPlayer.setVideoOutput(self.videoWidget)
+
+         # Play
+        self.mediaPlayer.play()
 
 class Player(QMainWindow):
     def __init__(self):
@@ -72,9 +67,9 @@ class Player(QMainWindow):
         else:
             self.mediaPlayer.play()
 
- 
-app = QApplication(sys.argv)
-videoplayer = VideoPlayer()
-videoplayer.resize(640, 480)
-videoplayer.show()
-sys.exit(app.exec_())
+
+if __name__ == '__main__':
+     app = QApplication([])
+     window = VideoWindow()
+     window.show()
+     sys.exit(app.exec_())

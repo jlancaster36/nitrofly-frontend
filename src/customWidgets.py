@@ -1,6 +1,15 @@
 import sys
 from enum import Enum
+from PyQt5 import QtWidgets
+from PyQt5.QtCore import *
 from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
+from PyQt5.QtMultimedia import *
+from PyQt5.QtMultimediaWidgets import *
+import glob
+import os
+import json
+
 
 class Console(Enum):
     SNES = 1
@@ -9,33 +18,191 @@ class Console(Enum):
     WII  = 4
     GBA  = 5
     NDS  = 6
-    _3DS = 7
+    DS3  = 7
     PSP  = 8
     PS1  = 9
     PS2  = 10
 
+class GalleryImage(Enum):
+    BOX3D = "box3d"
+    BOX2D = "box2d"
+    SUPPORT = "support"
 
 
+# class PicButton(QButtons.QAbstractButton):
+#     def __init__(self, pixmap, parent=None):
+#         super(PicButton, self).__init__(parent)
+#         self.pixmap = pixmap
 
-class PicButton(QAbstractButton):
-    def __init__(self, pixmap, parent=None):
-        super(PicButton, self).__init__(parent)
-        self.pixmap = pixmap
+#     def paintEvent(self, event):
+#         painter = QPainter(self)
+#         painter.drawPixmap(event.rect(), self.pixmap)
 
-    def paintEvent(self, event):
-        painter = QPainter(self)
-        painter.drawPixmap(event.rect(), self.pixmap)
-
-    def sizeHint(self):
-        return self.pixmap.size()
+#     def sizeHint(self):
+#         return self.pixmap.size()
 
 # Example Instance:
 #   button = PicButton(QPixmap("image.png"))
 
-def create_console(console: Console):
-    
+
+# Add console emulators to persistent data
+def addNewConsole(console: Console):
+    pass
+
+# Add Roms from a directory
+def addNewRoms():
     pass
 
 
+class ConsoleButton(QtWidgets.QPushButton):
+    def __init__(self, system, parent = None) -> None:
+
+        self.system = system
+        super().__init__(parent)
+
+        with open("userData/consoles.json", "r") as file:
+            consoles = json.load(file)
+
+        imagePath = consoles[system]["image"]
+        self.setImage(imagePath)
+        print (f"creating button for  {self.system}")
+
+    def setImage(self, imagePath: str):
+        self.setStyleSheet(
+            "QPushButton{qproperty-icon: url("+ imagePath +");}" 
+            "QPushButton::hover {background-color : rgba(0, 0, 0, .5);}")
+        
+        self.setIconSize(QSize(48, 48))
+        pass
+    
+    def getSystem(self):
+        return self.system
+    
+    def filter(self):
+        print("Filtering by " + self.system)
 
 
+class GalleryButton(QtWidgets.QPushButton):
+    def __init__(self, name, parent = None) -> None:
+        super().__init__(parent)
+
+        with open("userData/roms.json", "r") as file:
+            self.romData = json.load(file)
+
+        self.name = name
+        self.system = self.romData[name]["system"]
+        self.paths = {
+            GalleryImage.BOX3D: f"metadata/{self.system}/box3d",
+            GalleryImage.BOX2D: f"metadata/{self.system}/box2dfront",
+            GalleryImage.SUPPORT: f"metadata/{self.system}/support"
+        }
+        self.setImage()
+        
+        print (f"creating button for  {self.name}")
+
+    def setImage(self, type: GalleryImage = GalleryImage.BOX2D):
+        if self.romData[self.name][type.value] == False:
+            #TODO: ADD Default art
+            print(f"Metadata for {type} : {self.name} not found, setting default")
+            return
+        
+        path = self.paths[type] + "/" + self.name + ".png"
+        print("setting image path to " + path)
+
+
+        self.setStyleSheet(
+            "QPushButton{qproperty-icon: url("+path+");}" 
+            "QPushButton::hover {background-color : rgba(0, 0, 0, .5);}")
+        self.setIconSize(QSize(128, 128))
+    
+    def getRomName(self):
+        print(self.name)
+        return self.name
+    
+    # Single fuction to load preview metadata when rom is selected
+    def selected(self):
+        pass
+
+
+class VideoPlayer(QWidget):
+
+    def __init__(self, parent:QWidget = None):
+        super(VideoPlayer, self).__init__(parent)
+        self.parent = parent
+        self.mediaPlayer = QMediaPlayer(None, QMediaPlayer.VideoSurface)
+        self.videoItem = QGraphicsVideoItem()
+
+        # aspectRatio = float(parent.geometry().width()) / float(parent.geometry().height())
+        # normFactor = aspectRatio * (.75)
+        self.videoItem.setSize(QSizeF(800, 600))
+
+
+        # self.videoItem.setSize(QSizeF(parent.geometry().width(), parent.geometry().height()))
+        self.scene = QGraphicsScene(self)
+        self.graphicsView = QGraphicsView(self.scene)
+        self.graphicsView.fitInView(self.videoItem, Qt.KeepAspectRatio)
+        bounds = QRectF(self.scene.sceneRect())
+        self.graphicsView.centerOn(bounds.center())
+
+        self.scene.addItem(self.videoItem)
+        layout = QVBoxLayout()
+        layout.addWidget(self.graphicsView)
+        self.setLayout(layout)
+        self.mediaPlayer.setVideoOutput(self.videoItem)
+        self.counter = 0
+        self.graphicsView.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        # self.resizeContent()
+
+    def play(self, path="C:/Projects/ROM DUMP/3DS/3DSmedia/videos/Pokemon Alpha Sapphire (USA) (En,Ja,Fr,De,Es,It,Ko) (Rev 2) Decrypted.mp4"):
+        if self.mediaPlayer.state() == QMediaPlayer.PlayingState:
+            pass
+        else:
+            self.mediaPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(path)))
+            self.mediaPlayer.play()
+            self.counter += 1
+    
+    # def play(self, path: str):
+    #     path = os.path.dirname(os.path.abspath(__file__)) + "/metadata/3DSmedia/videos/Pokemon Alpha Sapphire (USA) (En,Ja,Fr,De,Es,It,Ko) (Rev 2) Decrypted.mp4"
+    #     if self.mediaPlayer.state() == QMediaPlayer.PlayingState:
+    #         pass
+    #     else:
+    #         self.mediaPlayer.setMedia(QMediaContent(QUrl.fromLocalFile('/Users/lancaster/Documents/Nitrofly/nitrofly-frontend/src/test.mp4')))
+    #         self.mediaPlayer.play()
+    #         self.counter += 1
+    
+    def resizeContent(self):
+        # self.show()
+        bounds = QRectF(self.scene.sceneRect())
+        self.graphicsView.fitInView(self.videoItem, Qt.IgnoreAspectRatio)
+        # self.videoItem.setSize(QSizeF(self.parent.geometry().width(), self.parent.geometry().height()))
+        self.graphicsView.centerOn(bounds.center())
+
+        self.play()
+
+    # def resizeEvent(self, a0: QResizeEvent) -> None:
+    #     super().resizeEvent(a0)
+    #     # self.videoItem.setSize(QSizeF(self.parent.geometry().width(), self.parent.geometry().height()))
+    #     self.graphicsView.fitInView(self.videoItem, Qt.KeepAspectRatio)
+
+class VerySimpleMediaPlayer(QWidget):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.open_file_button = QPushButton("Open file")
+        self.open_file_button.clicked.connect(self.open_file)
+
+        self.media_player = QMediaPlayer(self)
+        self.media_widget = QVideoWidget(self)
+        self.media_player.setVideoOutput(self.media_widget)
+        self.media_widget.show()
+
+        layout = QVBoxLayout()
+        layout.addWidget(self.open_file_button)
+        layout.addWidget(self.media_widget)
+        self.setLayout(layout)
+
+    def open_file(self):
+        filepath = '/Users/lancaster/Documents/Nitrofly/nitrofly-frontend/src/test.mp4'
+        print("playing")
+        self.media_player.setMedia(QMediaContent(QUrl.fromLocalFile(filepath)))
+        self.media_player.setVolume(20)  # not too loud
+        self.media_player.play()
