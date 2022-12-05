@@ -1,5 +1,6 @@
 import sys
 from enum import Enum
+from PyQt5 import QtWidgets
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
@@ -7,6 +8,7 @@ from PyQt5.QtMultimedia import *
 from PyQt5.QtMultimediaWidgets import *
 import glob
 import os
+import json
 
 
 class Console(Enum):
@@ -47,6 +49,33 @@ def addNewRoms():
     pass
 
 
+class ConsoleButton(QtWidgets.QPushButton):
+    def __init__(self, system, parent = None) -> None:
+
+        self.system = system
+        super().__init__(parent)
+
+        with open("userData\\consoles.json", "r") as file:
+            consoles = json.load(file)
+
+        imagePath = consoles[system]["image"]
+        self.setImage(imagePath)
+        print (f"creating button for  {self.system}")
+
+    def setImage(self, imagePath: str):
+        self.setStyleSheet(
+            "QPushButton{qproperty-icon: url("+ imagePath +");}" 
+            "QPushButton::hover {background-color : rgba(0, 0, 0, .5);}")
+        
+        self.setIconSize(QSize(48, 48))
+        pass
+    
+    def getSystem(self):
+        return self.system
+    
+    def filter(self):
+        print("Filtering by " + self.system)
+
 
 
 
@@ -76,6 +105,7 @@ class VideoPlayer(QWidget):
         self.setLayout(layout)
         self.mediaPlayer.setVideoOutput(self.videoItem)
         self.counter = 0
+        self.graphicsView.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         # self.resizeContent()
 
     def play(self, path="C:/Projects/ROM DUMP/3DS/3DSmedia/videos/Pokemon Alpha Sapphire (USA) (En,Ja,Fr,De,Es,It,Ko) (Rev 2) Decrypted.mp4"):
@@ -98,7 +128,7 @@ class VideoPlayer(QWidget):
     def resizeContent(self):
         # self.show()
         bounds = QRectF(self.scene.sceneRect())
-        self.graphicsView.fitInView(self.videoItem, Qt.KeepAspectRatio)
+        self.graphicsView.fitInView(self.videoItem, Qt.IgnoreAspectRatio)
         # self.videoItem.setSize(QSizeF(self.parent.geometry().width(), self.parent.geometry().height()))
         self.graphicsView.centerOn(bounds.center())
 

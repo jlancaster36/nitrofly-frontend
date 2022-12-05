@@ -57,6 +57,9 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.scrollArea_2.sizePolicy().hasHeightForWidth())
         self.scrollArea_2.setSizePolicy(sizePolicy)
         self.scrollArea_2.setStyleSheet("background: transparent;")
+        #May change later to just hide scrollbar
+        self.scrollArea_2.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.scrollArea_2.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.scrollArea_2.setWidgetResizable(True)
         self.scrollArea_2.setObjectName("scrollArea_2")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
@@ -72,9 +75,12 @@ class Ui_MainWindow(object):
                         "QPushButton::hover {background-color : rgba(0, 0, 0, .5);}")
         self.pushButton.setText("")
         self.pushButton.setIconSize(QtCore.QSize(32, 32))
-        self.mediaPlayer = QMediaPlayer(None, QMediaPlayer.VideoSurface)
-        # self.pushButton.clicked.connect(lambda: self.setup_video(r"/Fire Emblem - Awakening (USA) Decrypted.mp4"))
         self.verticalLayout_4.addWidget(self.pushButton, 0, QtCore.Qt.AlignVCenter)
+
+        ####################
+
+        self.populate_consoles()
+        ####################
 
         self.scrollArea_2.setWidget(self.scrollAreaWidgetContents)
         self.verticalLayout.addWidget(self.scrollArea_2, 0, QtCore.Qt.AlignTop)
@@ -229,6 +235,9 @@ class Ui_MainWindow(object):
         self.video_setup()
         self.pushButton.clicked.connect(self.videos.resizeContent)
 
+        # self.newButton = QPushButton()
+        # self.verticalLayout_4.addWidget(self.newButton, 0, QtCore.Qt.AlignVCenter)
+
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -252,16 +261,24 @@ class Ui_MainWindow(object):
         pass
 
     def populate_consoles(self):
-        with open("console.json", "r") as file:
+        self.consoleButtons = []
+        with open("userData\\consoles.json") as file:
             consoles = json.load(file)
         
-        for console in consoles:
-            if console["active"] != "true":
+        for c in consoles.keys():
+            # print(c)
+            # status = consoles[c]["active"]
+            # print(f"Status: {status}")
+            if consoles[c]["active"] != True:
                 continue
             
-            
-
-        pass
+            self.btn = ConsoleButton(c ,self.scrollAreaWidgetContents)
+            # self.btn.setStyleSheet(
+            #                 "QPushButton{qproperty-icon: url(assets/buttons/add-icon.png);}" 
+            #                 "QPushButton::hover {background-color : rgba(0, 0, 0, .5);}")
+            # self.btn.setText("")
+            # self.btn.setIconSize(QtCore.QSize(32, 32))
+            self.verticalLayout_4.addWidget(self.btn, 0, QtCore.Qt.AlignVCenter)
     
     def populate_gallery(self, filter):
         pass
@@ -269,13 +286,6 @@ class Ui_MainWindow(object):
     def add_click(self, button):
         print("Add Clicked")
         self.breath_button(button)
-
-    # def setup_video(self, fileName):
-    #     path = QDir.currentPath() + "/metadata/videos"
-    #     if fileName != '':
-    #         print(path + fileName)
-    #         self.mediaPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(path + fileName)))
-    #         self.mediaPlayer.play()
 
     def video_setup(self):
         self.media.setLayout(self.vidWrapperLayout)
