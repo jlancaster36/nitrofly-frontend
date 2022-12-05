@@ -23,6 +23,11 @@ class Console(Enum):
     PS1  = 9
     PS2  = 10
 
+class GalleryImage(Enum):
+    BOX3D = "box3d"
+    BOX2D = "box2d"
+    SUPPORT = "support"
+
 
 # class PicButton(QButtons.QAbstractButton):
 #     def __init__(self, pixmap, parent=None):
@@ -55,7 +60,7 @@ class ConsoleButton(QtWidgets.QPushButton):
         self.system = system
         super().__init__(parent)
 
-        with open("userData\\consoles.json", "r") as file:
+        with open("userData/consoles.json", "r") as file:
             consoles = json.load(file)
 
         imagePath = consoles[system]["image"]
@@ -77,6 +82,46 @@ class ConsoleButton(QtWidgets.QPushButton):
         print("Filtering by " + self.system)
 
 
+class GalleryButton(QtWidgets.QPushButton):
+    def __init__(self, name, parent = None) -> None:
+        super().__init__(parent)
+
+        with open("userData/roms.json", "r") as file:
+            self.romData = json.load(file)
+
+        self.name = name
+        self.system = self.romData[name]["system"]
+        self.paths = {
+            GalleryImage.BOX3D: f"metadata/{self.system}/box3d",
+            GalleryImage.BOX2D: f"metadata/{self.system}/box2dfront",
+            GalleryImage.SUPPORT: f"metadata/{self.system}/support"
+        }
+        self.setImage()
+        
+        print (f"creating button for  {self.name}")
+
+    def setImage(self, type: GalleryImage = GalleryImage.BOX2D):
+        if self.romData[self.name][type.value] == False:
+            #TODO: ADD Default art
+            print(f"Metadata for {type} : {self.name} not found, setting default")
+            return
+        
+        path = self.paths[type] + "/" + self.name + ".png"
+        print("setting image path to " + path)
+
+
+        self.setStyleSheet(
+            "QPushButton{qproperty-icon: url("+path+");}" 
+            "QPushButton::hover {background-color : rgba(0, 0, 0, .5);}")
+        self.setIconSize(QSize(128, 128))
+    
+    def getRomName(self):
+        print(self.name)
+        return self.name
+    
+    # Single fuction to load preview metadata when rom is selected
+    def selected(self):
+        pass
 
 
 class VideoPlayer(QWidget):

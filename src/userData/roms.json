@@ -1,0 +1,21 @@
+{
+    "Pokemon Alpha Sapphire (USA) (En,Ja,Fr,De,Es,It,Ko) (Rev 2) Decrypted": {
+        "system": "3DS",
+        "path": "None",
+        "has_video": true,
+        "box2d": true,
+        "box3d": true,
+        "support": true,
+        "alias": "None"
+    },
+
+    "Fire Emblem - Awakening (USA) Decrypted": {
+        "system": "3DS",
+        "path": "None",
+        "has_video": true,
+        "box2d": true,
+        "box3d": true,
+        "support": true,
+        "alias": "None"
+    }
+}

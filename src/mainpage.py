@@ -62,8 +62,9 @@ class Ui_MainWindow(object):
         self.scrollArea_2.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.scrollArea_2.setWidgetResizable(True)
         self.scrollArea_2.setObjectName("scrollArea_2")
+        self.scrollArea_2.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 72, 77))
+        # self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 72, 77))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
 
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents)
@@ -219,7 +220,7 @@ class Ui_MainWindow(object):
         
         ###### Imported video code
         
-        path = os.path.dirname(os.path.abspath(__file__)) + "/metadata/3DSmedia/videos/Pokemon Alpha Sapphire (USA) (En,Ja,Fr,De,Es,It,Ko) (Rev 2) Decrypted.mp4"
+        path = os.path.dirname(os.path.abspath(__file__)) + "/metadata/3DS/videos/Pokemon Alpha Sapphire (USA) (En,Ja,Fr,De,Es,It,Ko) (Rev 2) Decrypted.mp4"
         # fileName = "C:/Projects/ROM DUMP/3DS/3DSmedia/videos/Pokemon Alpha Sapphire (USA) (En,Ja,Fr,De,Es,It,Ko) (Rev 2) Decrypted.mp4"
         fileName = path
         print(path)
@@ -235,8 +236,7 @@ class Ui_MainWindow(object):
         self.video_setup()
         self.pushButton.clicked.connect(self.videos.resizeContent)
 
-        # self.newButton = QPushButton()
-        # self.verticalLayout_4.addWidget(self.newButton, 0, QtCore.Qt.AlignVCenter)
+        self.populate_gallery()
 
 
     def retranslateUi(self, MainWindow):
@@ -261,27 +261,32 @@ class Ui_MainWindow(object):
         pass
 
     def populate_consoles(self):
-        self.consoleButtons = []
-        with open("userData\\consoles.json") as file:
+        self.consoleButtons = {}
+        with open("userData/consoles.json") as file:
             consoles = json.load(file)
         
         for c in consoles.keys():
-            # print(c)
-            # status = consoles[c]["active"]
-            # print(f"Status: {status}")
             if consoles[c]["active"] != True:
                 continue
             
             self.btn = ConsoleButton(c ,self.scrollAreaWidgetContents)
-            # self.btn.setStyleSheet(
-            #                 "QPushButton{qproperty-icon: url(assets/buttons/add-icon.png);}" 
-            #                 "QPushButton::hover {background-color : rgba(0, 0, 0, .5);}")
-            # self.btn.setText("")
-            # self.btn.setIconSize(QtCore.QSize(32, 32))
             self.verticalLayout_4.addWidget(self.btn, 0, QtCore.Qt.AlignVCenter)
+            self.btn.clicked.connect(self.btn.filter)
+            self.consoleButtons[c] = self.btn
     
-    def populate_gallery(self, filter):
-        pass
+    #TODO: implement console/handheld filter
+    def populate_gallery(self, filter = None):
+        self.galleryButtons = {}
+        with open("userData/roms.json") as file:
+            gallery = json.load(file)
+        
+        for item in gallery.keys():
+            self.newbtn = GalleryButton(item, self.scrollAreaWidgetContents_2)
+            self.gameGrid.addWidget(self.newbtn)
+            #TODO: Play specific rom Video
+            self.newbtn.clicked.connect(self.newbtn.getRomName)
+            self.galleryButtons[item] = self.newbtn
+
 
     def add_click(self, button):
         print("Add Clicked")
