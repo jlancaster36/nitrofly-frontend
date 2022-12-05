@@ -206,6 +206,8 @@ class Ui_MainWindow(object):
 
         self.gameGrid = QtWidgets.QGridLayout()
         self.gameGrid.setObjectName("gameGrid")
+        self.gameGrid.setOriginCorner(0)
+        
         self.verticalLayout_2.addLayout(self.gameGrid)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents_2)
         self.verticalLayout_3.addWidget(self.scrollArea,6)
@@ -237,7 +239,6 @@ class Ui_MainWindow(object):
         self.vidWrapperLayout = QVBoxLayout()
         self.video_setup()
         self.pushButton.clicked.connect(self.videos.resizeContent)
-
         self.populate_gallery()
 
 
@@ -282,12 +283,22 @@ class Ui_MainWindow(object):
         with open("userData/roms.json") as file:
             gallery = json.load(file)
         
-        for item in gallery.keys():
-            self.newbtn = GalleryButton(item, self.scrollAreaWidgetContents_2)
-            self.gameGrid.addWidget(self.newbtn)
+        row = 0
+        col = 0
+        for item in [i for i in gallery.keys()] * 3:
+            self.newbtn = GalleryButton(item, self.getMarquee(), self.scrollAreaWidgetContents_2)
+            self.gameGrid.addWidget(self.newbtn, row, col, Qt.AlignLeft)
+            # self.gameGrid.addWidget(self.newbtn)
             #TODO: Play specific rom Video
             self.newbtn.clicked.connect(self.newbtn.getRomName)
             self.galleryButtons[item] = self.newbtn
+            #TODO: QT wants to stretch widgets when you don't add to specific row
+            # Find a way to set number of cols dynamicly without breaking everything.
+            # Right now on a larger screen there's a ton of empty space            
+            col += 1
+            if col % 5 == 0:
+                row += 1
+                col = 0
 
 
     def add_click(self, button):
@@ -312,6 +323,9 @@ class Ui_MainWindow(object):
         self.rtLabel = QLabel()
         self.rtLabel.setText("Moree")
         self.rtWrapperLayout.addWidget(self.rtLabel)
+    
+    def getMarquee(self):
+        return (self.mediaLabel, self.rtLabel, self.videos)
 
 if __name__ == '__main__':
     import sys
@@ -319,7 +333,7 @@ if __name__ == '__main__':
     w = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(w)
-    w.showMaximized()
+    w.show()
     # t = threading.Thread(target = ui.videos.resizeContent)
     # t.start()
     sys.exit(app.exec_())
