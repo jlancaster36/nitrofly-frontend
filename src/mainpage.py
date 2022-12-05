@@ -21,6 +21,8 @@ from PyQt5.QtCore import QDir, Qt, QUrl, QSize
 
 from customWidgets import *
 
+print("kilroy was here")
+
 class Ui_MainWindow(object):
 
     def setupUi(self, MainWindow):
