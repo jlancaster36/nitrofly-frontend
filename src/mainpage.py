@@ -23,9 +23,12 @@ from customWidgets import *
 
 class Ui_MainWindow(object):
 
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
+    def setupUi(self, MainWindow: QtWidgets.QMainWindow):
+        MainWindow.setObjectName("Nitrofly")
         MainWindow.resize(800, 600)
+
+        MainWindow.setWindowIcon(QIcon(r"assets\NF Logo NC.png"))
+        
 
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setStyleSheet("#centralwidget{border-image: url(assets/asiimov2.png);}")
@@ -53,7 +56,7 @@ class Ui_MainWindow(object):
         self.scrollArea_2 = QtWidgets.QScrollArea(self.consoleSelect)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setVerticalStretch(1)
         sizePolicy.setHeightForWidth(self.scrollArea_2.sizePolicy().hasHeightForWidth())
         self.scrollArea_2.setSizePolicy(sizePolicy)
         self.scrollArea_2.setStyleSheet("background: transparent;")
@@ -62,7 +65,7 @@ class Ui_MainWindow(object):
         self.scrollArea_2.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.scrollArea_2.setWidgetResizable(True)
         self.scrollArea_2.setObjectName("scrollArea_2")
-        self.scrollArea_2.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        # self.scrollArea_2.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
         # self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 72, 77))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
@@ -179,7 +182,7 @@ class Ui_MainWindow(object):
         self.rightText.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.rightText.setFrameShadow(QtWidgets.QFrame.Raised)
         self.rightText.setObjectName("rightText")
-        self.horizontalLayout.addWidget(self.rightText,3)
+        self.horizontalLayout.addWidget(self.rightText,2)
 
         self.verticalLayout_3.addWidget(self.gameMarquee,3)
         self.scrollArea = QtWidgets.QScrollArea(self.gameSelect)

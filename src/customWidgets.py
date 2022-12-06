@@ -171,20 +171,34 @@ class GalleryButton(QtWidgets.QPushButton):
         suppPath = self.paths[GalleryImage.SUPPORT] + "/" + self.name + ".png"
         # print('setting supprot path: ' + suppPath)
 
-        self.setStyleSheet(
-            "QPushButton{"
-                "border-image: url("+path+");"
-                "background-repeat: no-repeat;"
-                "width: 128px;"
-                "height: 128px;"
-                "}" 
-            "QPushButton::hover {"
-                # "background-color : rgba(0, 0, 0, .5);"
-                "border-image: url("+suppPath+");"
-                "}")
-        self.sizePolicy().setHorizontalStretch(0)
+        if self.system in ["3DS", "NDS"]:
+            self.setStyleSheet(
+                "QPushButton{"
+                    "border-image: url("+path+");"
+                    "background-repeat: no-repeat;"
+                    "width: 128px;"
+                    "height: 128px;"
+                    "}" 
+                "QPushButton::hover {"
+                    # "background-color : rgba(0, 0, 0, .5);"
+                    "border-image: url("+suppPath+");"
+                    "}")
+        else:
+            self.setStyleSheet(
+                "QPushButton{"
+                    "border-image: url("+path+");"
+                    "background-repeat: no-repeat;"
+                    "width: 128px;"
+                    "height: 179px;"
+                    "}" 
+                "QPushButton::hover {"
+                    # "background-color : rgba(0, 0, 0, .5);"
+                    "border-image: url("+suppPath+");"
+                    "width: 128px;"
+                    "height: 128px;"
+                    "}")
 
-        self.setIconSize(QSize(128, 128))
+        self.sizePolicy().setHorizontalStretch(0)
     
     def getRomName(self):
         print(self.name)
@@ -199,13 +213,14 @@ class GalleryButton(QtWidgets.QPushButton):
         left = self.marq[0]
         right = self.marq[1]
         video = self.marq[2]
-        video.mediaPlayer.stop()
-        box = QPixmap(self.paths[GalleryImage.BOX3D] + "/" + self.name + ".png")
 
-        size = right.geometry().size()
+        video.mediaPlayer.stop()
+
+        box = QPixmap(self.paths[GalleryImage.BOX3D] + "/" + self.name + ".png")
         right.setPixmap(box.scaled(right.width(), right.height(), Qt.KeepAspectRatio))
         left.setText(self.name)
         left.setWordWrap(True)
+
         # right.resize(size)
         right.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
         left.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
