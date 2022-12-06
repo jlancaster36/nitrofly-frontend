@@ -220,7 +220,7 @@ class GalleryButton(QtWidgets.QPushButton):
 
         return super().enterEvent(QEvent)
 
-class labelFunctionality(QLabel):
+class ResizingLabel(QLabel):
     def __init__(self, parent = None) -> None:
         super().__init__(parent)
     def resizeEvent(self, a0: QResizeEvent) -> None:

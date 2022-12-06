@@ -314,7 +314,7 @@ class Ui_MainWindow(object):
     def label_setup(self):
         self.ltWrapperLayout = QVBoxLayout()
         self.leftText.setLayout(self.ltWrapperLayout)
-        self.mediaLabel = labelFunctionality()
+        self.mediaLabel = ResizingLabel()
         self.mediaLabel.setText("Select a Game")
         
         ## BELOW IS HOW TO GET NATIVE RESOLUTION
