@@ -21,6 +21,8 @@ from PyQt5.QtCore import QDir, Qt, QUrl, QSize
 
 from customWidgets import *
 
+print("kilroy was here")
+
 class Ui_MainWindow(object):
 
     def setupUi(self, MainWindow: QtWidgets.QMainWindow):
@@ -315,8 +317,15 @@ class Ui_MainWindow(object):
     def label_setup(self):
         self.ltWrapperLayout = QVBoxLayout()
         self.leftText.setLayout(self.ltWrapperLayout)
-        self.mediaLabel = QLabel()
-        self.mediaLabel.setText("Text")
+        self.mediaLabel = ResizingLabel()
+        self.mediaLabel.setText("Select a Game")
+        
+        ## BELOW IS HOW TO GET NATIVE RESOLUTION
+        # screen = app.primaryScreen()
+        # size = screen.size()
+        # print(size.width(), size.height())
+
+        self.mediaLabel.setStyleSheet('color: rgb(255,255,255); font: Arial')
         self.ltWrapperLayout.addWidget(self.mediaLabel)
 
         self.rtWrapperLayout = QVBoxLayout()

@@ -9,6 +9,7 @@ from PyQt5.QtMultimediaWidgets import *
 import glob
 import os
 import json
+import math
 
 
 class Console(Enum):
@@ -121,7 +122,7 @@ class VideoPlayer(QWidget):
     #         self.counter += 1
     
     def play(self, path: str):
-        print("PLAYING FROM" + path)
+        print("PLAYING FROM " + path)
         if self.mediaPlayer.state() == QMediaPlayer.PlayingState:
             pass
         else:
@@ -132,16 +133,16 @@ class VideoPlayer(QWidget):
     def resizeContent(self):
         # self.show()
         bounds = QRectF(self.scene.sceneRect())
-        self.graphicsView.fitInView(self.videoItem, Qt.IgnoreAspectRatio)
+        self.graphicsView.fitInView(self.videoItem, Qt.KeepAspectRatio)
         # self.videoItem.setSize(QSizeF(self.parent.geometry().width(), self.parent.geometry().height()))
         self.graphicsView.centerOn(bounds.center())
 
+
         # self.play()
 
-    # def resizeEvent(self, a0: QResizeEvent) -> None:
-    #     super().resizeEvent(a0)
-    #     # self.videoItem.setSize(QSizeF(self.parent.geometry().width(), self.parent.geometry().height()))
-    #     self.graphicsView.fitInView(self.videoItem, Qt.KeepAspectRatio)
+    def resizeEvent(self, a0: QResizeEvent) -> None:
+        super().resizeEvent(a0)
+        self.graphicsView.fitInView(self.videoItem, Qt.KeepAspectRatio)
 
 class GalleryButton(QtWidgets.QPushButton):
     def __init__(self, name, marq: tuple[QLabel, QLabel, VideoPlayer], parent = None) -> None:
@@ -208,7 +209,7 @@ class GalleryButton(QtWidgets.QPushButton):
     def selected(self):
         print("Hovering over " + self.name)
         pass
-
+        
     def enterEvent(self, QEvent) -> None:
         left = self.marq[0]
         right = self.marq[1]
@@ -233,3 +234,17 @@ class GalleryButton(QtWidgets.QPushButton):
 
 
         return super().enterEvent(QEvent)
+
+class ResizingLabel(QLabel):
+    def __init__(self, parent = None) -> None:
+        super().__init__(parent)
+    def resizeEvent(self, a0: QResizeEvent) -> None:
+        #print(a0.size())
+
+        magnitude = (int) (math.sqrt(a0.size().height() + a0.size().width()) / 2)
+        font = QFont('Arial', magnitude)
+        print(self.size())
+        self.setFont(font)
+
+        return super().resizeEvent(a0)
+        
