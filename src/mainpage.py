@@ -26,8 +26,8 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("Nitrofly")
         MainWindow.resize(800, 600)
-
         MainWindow.setWindowIcon(QIcon(r"assets\NF Logo NC.png"))
+        self.MainWindow = MainWindow
         
 
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -273,10 +273,12 @@ class Ui_MainWindow(object):
             if consoles[c]["active"] != True:
                 continue
             
-            self.btn = ConsoleButton(c ,self.scrollAreaWidgetContents)
-            self.verticalLayout_4.addWidget(self.btn, 0, QtCore.Qt.AlignVCenter)
-            self.btn.clicked.connect(self.btn.filter)
-            self.consoleButtons[c] = self.btn
+            btn = ConsoleButton(c ,self.scrollAreaWidgetContents)
+            self.verticalLayout_4.addWidget(btn, 0, QtCore.Qt.AlignVCenter)
+            btn.clicked.connect(self.filterGallery)
+            self.consoleButtons[c] = btn
+        
+        print(self.consoleButtons)
     
     #TODO: implement console/handheld filter
     def populate_gallery(self, filter = None):
@@ -286,7 +288,7 @@ class Ui_MainWindow(object):
         
         row = 0
         col = 0
-        for item in [i for i in gallery.keys()] * 3:
+        for item in [i for i in gallery.keys()]:
             self.newbtn = GalleryButton(item, self.getMarquee(), self.scrollAreaWidgetContents_2)
             self.gameGrid.addWidget(self.newbtn, row, col, Qt.AlignLeft)
             # self.gameGrid.addWidget(self.newbtn)
@@ -300,7 +302,15 @@ class Ui_MainWindow(object):
             if col % 5 == 0:
                 row += 1
                 col = 0
-
+    
+    def filterGallery(self):
+        system = self.MainWindow.sender().system
+        print(f"filtering by {system}")
+        for k in self.galleryButtons.keys():
+            if self.galleryButtons[k].system != system:
+                self.galleryButtons[k].hide()
+            else:
+                self.galleryButtons[k].show()
 
     def add_click(self, button):
         print("Add Clicked")

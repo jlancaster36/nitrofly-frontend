@@ -67,7 +67,7 @@ class ConsoleButton(QtWidgets.QPushButton):
 
         imagePath = consoles[system]["image"]
         self.setImage(imagePath)
-        print (f"creating button for  {self.system}")
+        # print (f"creating button for  {self.system}")
 
     def setImage(self, imagePath: str):
         self.setStyleSheet(
@@ -82,6 +82,12 @@ class ConsoleButton(QtWidgets.QPushButton):
     
     def filter(self):
         print("Filtering by " + self.system)
+    
+    def __repr__(self) -> str:
+        return f"{self.system} button"
+    
+    def __str__(self) -> str:
+        return f"{self.system} button"
 
 
 class VideoPlayer(QWidget):
@@ -162,7 +168,7 @@ class GalleryButton(QtWidgets.QPushButton):
         }
         self.marq = marq
         self.setImage()
-        print (f"creating button for  {self.name}")
+        # print (f"creating button for  {self.name}")
 
     def setImage(self, type: GalleryImage = GalleryImage.BOX2D):
         self.type = type
