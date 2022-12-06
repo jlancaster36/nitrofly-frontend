@@ -21,6 +21,9 @@ from PyQt5.QtCore import QDir, Qt, QUrl, QSize
 
 from customWidgets import *
 
+sys.dont_write_bytecode = True
+
+
 class Ui_MainWindow(object):
 
     def setupUi(self, MainWindow: QtWidgets.QMainWindow):

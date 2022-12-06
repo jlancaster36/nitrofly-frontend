@@ -1,5 +1,4 @@
 import sys
-sys.dont_write_bytecode = True
 from enum import Enum
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import *
