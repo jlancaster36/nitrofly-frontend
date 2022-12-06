@@ -27,7 +27,7 @@ class Ui_MainWindow(object):
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(800, 600)
+        MainWindow.resize(1200, 1000)
 
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setStyleSheet("#centralwidget{border-image: url(assets/asiimov2.png);}")
@@ -314,8 +314,15 @@ class Ui_MainWindow(object):
     def label_setup(self):
         self.ltWrapperLayout = QVBoxLayout()
         self.leftText.setLayout(self.ltWrapperLayout)
-        self.mediaLabel = QLabel()
-        self.mediaLabel.setText("Text")
+        self.mediaLabel = labelFunctionality()
+        self.mediaLabel.setText("Select a Game")
+        
+        ## BELOW IS HOW TO GET NATIVE RESOLUTION
+        # screen = app.primaryScreen()
+        # size = screen.size()
+        # print(size.width(), size.height())
+
+        self.mediaLabel.setStyleSheet('color: rgb(255,255,255); font: Arial')
         self.ltWrapperLayout.addWidget(self.mediaLabel)
 
         self.rtWrapperLayout = QVBoxLayout()
