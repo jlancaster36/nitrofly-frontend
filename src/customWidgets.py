@@ -9,6 +9,7 @@ from PyQt5.QtMultimediaWidgets import *
 import glob
 import os
 import json
+import math
 
 
 class Console(Enum):
@@ -132,16 +133,16 @@ class VideoPlayer(QWidget):
     def resizeContent(self):
         # self.show()
         bounds = QRectF(self.scene.sceneRect())
-        self.graphicsView.fitInView(self.videoItem, Qt.IgnoreAspectRatio)
+        self.graphicsView.fitInView(self.videoItem, Qt.KeepAspectRatio)
         # self.videoItem.setSize(QSizeF(self.parent.geometry().width(), self.parent.geometry().height()))
         self.graphicsView.centerOn(bounds.center())
 
+
         # self.play()
 
-    # def resizeEvent(self, a0: QResizeEvent) -> None:
-    #     super().resizeEvent(a0)
-    #     # self.videoItem.setSize(QSizeF(self.parent.geometry().width(), self.parent.geometry().height()))
-    #     self.graphicsView.fitInView(self.videoItem, Qt.KeepAspectRatio)
+    def resizeEvent(self, a0: QResizeEvent) -> None:
+        super().resizeEvent(a0)
+        self.graphicsView.fitInView(self.videoItem, Qt.KeepAspectRatio)
 
 class GalleryButton(QtWidgets.QPushButton):
     def __init__(self, name, marq: tuple[QLabel, QLabel, VideoPlayer], parent = None) -> None:
@@ -171,20 +172,34 @@ class GalleryButton(QtWidgets.QPushButton):
         suppPath = self.paths[GalleryImage.SUPPORT] + "/" + self.name + ".png"
         # print('setting supprot path: ' + suppPath)
 
-        self.setStyleSheet(
-            "QPushButton{"
-                "border-image: url("+path+");"
-                "background-repeat: no-repeat;"
-                "width: 128px;"
-                "height: 128px;"
-                "}" 
-            "QPushButton::hover {"
-                # "background-color : rgba(0, 0, 0, .5);"
-                "border-image: url("+suppPath+");"
-                "}")
-        self.sizePolicy().setHorizontalStretch(0)
+        if self.system in ["3DS", "NDS"]:
+            self.setStyleSheet(
+                "QPushButton{"
+                    "border-image: url("+path+");"
+                    "background-repeat: no-repeat;"
+                    "width: 128px;"
+                    "height: 128px;"
+                    "}" 
+                "QPushButton::hover {"
+                    # "background-color : rgba(0, 0, 0, .5);"
+                    "border-image: url("+suppPath+");"
+                    "}")
+        else:
+            self.setStyleSheet(
+                "QPushButton{"
+                    "border-image: url("+path+");"
+                    "background-repeat: no-repeat;"
+                    "width: 128px;"
+                    "height: 179px;"
+                    "}" 
+                "QPushButton::hover {"
+                    # "background-color : rgba(0, 0, 0, .5);"
+                    "border-image: url("+suppPath+");"
+                    "width: 128px;"
+                    "height: 128px;"
+                    "}")
 
-        self.setIconSize(QSize(128, 128))
+        self.sizePolicy().setHorizontalStretch(0)
     
     def getRomName(self):
         print(self.name)
@@ -194,18 +209,19 @@ class GalleryButton(QtWidgets.QPushButton):
     def selected(self):
         print("Hovering over " + self.name)
         pass
-
+        
     def enterEvent(self, QEvent) -> None:
         left = self.marq[0]
         right = self.marq[1]
         video = self.marq[2]
-        video.mediaPlayer.stop()
-        box = QPixmap(self.paths[GalleryImage.BOX3D] + "/" + self.name + ".png")
 
-        size = right.geometry().size()
+        video.mediaPlayer.stop()
+
+        box = QPixmap(self.paths[GalleryImage.BOX3D] + "/" + self.name + ".png")
         right.setPixmap(box.scaled(right.width(), right.height(), Qt.KeepAspectRatio))
         left.setText(self.name)
         left.setWordWrap(True)
+
         # right.resize(size)
         right.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
         left.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
@@ -218,3 +234,17 @@ class GalleryButton(QtWidgets.QPushButton):
 
 
         return super().enterEvent(QEvent)
+
+class ResizingLabel(QLabel):
+    def __init__(self, parent = None) -> None:
+        super().__init__(parent)
+    def resizeEvent(self, a0: QResizeEvent) -> None:
+        #print(a0.size())
+
+        magnitude = (int) (math.sqrt(a0.size().height() + a0.size().width()) / 2)
+        font = QFont('Arial', magnitude)
+        print(self.size())
+        self.setFont(font)
+
+        return super().resizeEvent(a0)
+        

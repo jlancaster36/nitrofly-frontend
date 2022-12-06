@@ -17,5 +17,25 @@
         "box3d": true,
         "support": true,
         "alias": "None"
+    },
+
+    "Legend of Zelda, The - Twilight Princess (USA)": {
+        "system": "GCN",
+        "path": "None",
+        "has_video": true,
+        "box2d": true,
+        "box3d": true,
+        "support": true,
+        "alias": "None"
+    },
+
+    "Super Mario Strikers (USA).nkit": {
+        "system": "GCN",
+        "path": "None",
+        "has_video": true,
+        "box2d": true,
+        "box3d": true,
+        "support": true,
+        "alias": "None"
     }
 }
