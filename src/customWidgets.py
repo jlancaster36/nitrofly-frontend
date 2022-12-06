@@ -122,7 +122,7 @@ class VideoPlayer(QWidget):
     #         self.counter += 1
     
     def play(self, path: str):
-        print("PLAYING FROM " + path)
+        # print("PLAYING FROM" + path)
         if self.mediaPlayer.state() == QMediaPlayer.PlayingState:
             pass
         else:
