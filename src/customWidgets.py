@@ -226,7 +226,7 @@ class labelFunctionality(QLabel):
     def resizeEvent(self, a0: QResizeEvent) -> None:
         #print(a0.size())
 
-        magnitude = (int) (math.sqrt(a0.size().height() + a0.size().width()) / 2.5)
+        magnitude = (int) (math.sqrt(a0.size().height() + a0.size().width()) / 2)
         font = QFont('Arial', magnitude)
         print(self.size())
         self.setFont(font)
