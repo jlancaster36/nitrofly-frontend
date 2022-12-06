@@ -10,7 +10,6 @@
 # from assets import asiimov_rc
 # import buttons_rc
 import os
-import pathlib
 import sys
 import threading
 import json
@@ -24,8 +23,7 @@ from customWidgets import *
 sys.dont_write_bytecode = True
 
 class Ui_MainWindow(object):
-
-    def setupUi(self, MainWindow: QtWidgets.QMainWindow):
+    def setupUi(self, MainWindow):
         MainWindow.setObjectName("Nitrofly")
         MainWindow.resize(800, 600)
 

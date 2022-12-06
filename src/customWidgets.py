@@ -101,6 +101,7 @@ class VideoPlayer(QWidget):
         self.scene = QGraphicsScene(self)
         self.graphicsView = QGraphicsView(self.scene)
         self.graphicsView.fitInView(self.videoItem, Qt.KeepAspectRatio)
+        self.graphicsView.setStyleSheet("background: transparent;")
         bounds = QRectF(self.scene.sceneRect())
         self.graphicsView.centerOn(bounds.center())
 
@@ -111,6 +112,7 @@ class VideoPlayer(QWidget):
         self.mediaPlayer.setVideoOutput(self.videoItem)
         self.counter = 0
         self.graphicsView.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.graphicsView.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         # self.resizeContent()
 
     # def play(self, path="C:/Projects/ROM DUMP/3DS/3DSmedia/videos/Pokemon Alpha Sapphire (USA) (En,Ja,Fr,De,Es,It,Ko) (Rev 2) Decrypted.mp4"):
@@ -163,16 +165,17 @@ class GalleryButton(QtWidgets.QPushButton):
         print (f"creating button for  {self.name}")
 
     def setImage(self, type: GalleryImage = GalleryImage.BOX2D):
+        self.type = type
         if self.romData[self.name][type.value] == False:
             #TODO: ADD Default art
             print(f"Metadata for {type} : {self.name} not found, setting default")
             return
         
-        path     = self.paths[type] + "/" + self.name + ".png"
+        path     = self.paths[self.type] + "/" + self.name + ".png"
         suppPath = self.paths[GalleryImage.SUPPORT] + "/" + self.name + ".png"
         # print('setting supprot path: ' + suppPath)
 
-        if self.system in ["3DS", "NDS"]:
+        if self.system in ["3DS", "NDS", "GBA"]:
             self.setStyleSheet(
                 "QPushButton{"
                     "border-image: url("+path+");"
@@ -233,7 +236,22 @@ class GalleryButton(QtWidgets.QPushButton):
         video.play(path)
 
 
+        path     = self.paths[self.type] + "/" + self.name + ".png"
+        suppPath = self.paths[GalleryImage.SUPPORT] + "/" + self.name + ".png"
+        self.setStyleSheet(
+                "QPushButton{"
+                    "border-image: url("+suppPath+");"
+                    "background-repeat: no-repeat;"
+                    "width: 128px;"
+                    "height: 128px;"
+                    "}")
         return super().enterEvent(QEvent)
+    
+    def leaveEvent(self, QEvent):
+        path     = self.paths[self.type] + "/" + self.name + ".png"
+        suppPath = self.paths[GalleryImage.SUPPORT] + "/" + self.name + ".png"
+        self.setImage(self.type)
+
 
 class ResizingLabel(QLabel):
     def __init__(self, parent = None) -> None:
