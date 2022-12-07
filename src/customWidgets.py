@@ -12,6 +12,7 @@ import json
 import math
 
 
+
 class Console(Enum):
     SNES = 1
     N64  = 2
@@ -259,16 +260,27 @@ class GalleryButton(QtWidgets.QPushButton):
         self.setImage(self.type)
 
 
+# This class if for a label that resizes according to changing window sizes.
+# main_window is the ui's main window
 class ResizingLabel(QLabel):
-    def __init__(self, parent = None) -> None:
+    def __init__(self, main_window, parent = None) -> None:
         super().__init__(parent)
+        self.main_window = main_window
     def resizeEvent(self, a0: QResizeEvent) -> None:
-        #print(a0.size())
 
-        magnitude = (int) (math.sqrt(a0.size().height() + a0.size().width()) / 2)
+        width = self.main_window.width()
+        height = self.main_window.height()
+
+        magnitudeWidth = 0.25 * width
+        magnitudeHeight = 0.15 * height
+
+        # widthDiff = a0.size().width() - a0.oldSize().width()
+        # heightDiff = a0.size().height() - a0.oldSize().height()
+        # print(widthDiff, heightDiff)
+
+        magnitude = (int) (math.sqrt(magnitudeWidth + magnitudeHeight) / 2)
+    
         font = QFont('Arial', magnitude)
-        print(self.size())
         self.setFont(font)
-
         return super().resizeEvent(a0)
         
