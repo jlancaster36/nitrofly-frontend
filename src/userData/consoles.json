@@ -33,15 +33,15 @@
 
     "NDS": {
         "active": true,
-        "image": "assets/consoleIcons/3DSicon.png",
+        "image": "assets/consoleIcons/NDSicon.png",
         "emu": "None",
         "rom_path": "None",
         "is_handheld": true
     },
 
-    "DS3": {
+    "3DS": {
         "active": true,
-        "image": "assets/consoleIcons/NDSicon.png",
+        "image": "assets/consoleIcons/3DSicon.png",
         "emu": "None",
         "rom_path": "None",
         "is_handheld": true
