@@ -201,13 +201,7 @@ class GalleryButton(QtWidgets.QPushButton):
                     "background-repeat: no-repeat;"
                     "width: 128px;"
                     "height: 179px;"
-                    "}" 
-                "QPushButton::hover {"
-                    # "background-color : rgba(0, 0, 0, .5);"
-                    "border-image: url("+suppPath+");"
-                    "width: 128px;"
-                    "height: 128px;"
-                    "}")
+                    "}" )
 
         self.sizePolicy().setHorizontalStretch(0)
     

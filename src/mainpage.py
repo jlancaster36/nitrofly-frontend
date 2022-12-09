@@ -229,17 +229,13 @@ class Ui_MainWindow(object):
         # fileName = "C:/Projects/ROM DUMP/3DS/3DSmedia/videos/Pokemon Alpha Sapphire (USA) (En,Ja,Fr,De,Es,It,Ko) (Rev 2) Decrypted.mp4"
         fileName = path
         print(path)
-        # path = "/Users/lancaster/Documents/Nitrofly/nitrofly-frontend/src/test.mp4"
-
-        # if fileName != '':
-        #     self.mediaPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(fileName)))
-        #     self.mediaPlayer.play()
 
         self.label_setup()
 
         self.vidWrapperLayout = QVBoxLayout()
         self.video_setup()
         self.pushButton.clicked.connect(self.videos.resizeContent)
+
         self.populate_gallery()
 
 
@@ -278,7 +274,16 @@ class Ui_MainWindow(object):
             btn.clicked.connect(self.filterGallery)
             self.consoleButtons[c] = btn
         
-        print(self.consoleButtons)
+        # print(self.consoleButtons)
+        #TODO: Get Icon for show All button
+        self.showAllBtn = QPushButton(self.scrollAreaWidgetContents)
+        self.showAllBtn.setStyleSheet(
+                        "QPushButton{qproperty-icon: url(assets/buttons/add-icon.png);}" 
+                        "QPushButton::hover {background-color : rgba(0, 0, 0, .5);}")
+        self.showAllBtn.setText("")
+        self.showAllBtn.setIconSize(QtCore.QSize(48, 48))
+        self.verticalLayout_4.addWidget(self.showAllBtn, 0, QtCore.Qt.AlignVCenter)
+        self.showAllBtn.clicked.connect(self.removeFilter)
     
     #TODO: implement console/handheld filter
     def populate_gallery(self, filter = None):
@@ -311,6 +316,10 @@ class Ui_MainWindow(object):
                 self.galleryButtons[k].hide()
             else:
                 self.galleryButtons[k].show()
+    
+    def removeFilter(self):
+        for k in self.galleryButtons.keys():
+            self.galleryButtons[k].show()
 
     def add_click(self, button):
         print("Add Clicked")
@@ -351,7 +360,7 @@ if __name__ == '__main__':
     w = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(w)
-    w.show()
+    w.showFullScreen()
     # t = threading.Thread(target = ui.videos.resizeContent)
     # t.start()
     sys.exit(app.exec_())

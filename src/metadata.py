@@ -13,4 +13,7 @@ def setup_text(title):
 def setup_other(title):
     pass
 
+# https://api.thegamesdb.net/
+# https://forums.thegamesdb.net/viewtopic.php?t=61
+
 
