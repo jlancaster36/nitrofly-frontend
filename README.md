@@ -11,3 +11,6 @@ Planned feature list
 
 Packages
     -PyQt5
+
+Dependencies:
+    -Windows may require the KLite codec found here: https://www.codecguide.com/download_k-lite_codec_pack_basic.htm

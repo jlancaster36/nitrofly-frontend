@@ -13,4 +13,9 @@ def setup_text(title):
 def setup_other(title):
     pass
 
+# For a possible webscrape solutions:
+    # https://www.igdb.com/games/super-metroid
+        # API Link: https://api-docs.igdb.com/#about
+    # https://www.gamesdatabase.org/all_videos
+    # each gamepage has boxart, support, and video
 
