@@ -121,14 +121,6 @@ class VideoPlayer(QWidget):
         self.graphicsView.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.graphicsView.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         # self.resizeContent()
-
-    # def play(self, path="C:/Projects/ROM DUMP/3DS/3DSmedia/videos/Pokemon Alpha Sapphire (USA) (En,Ja,Fr,De,Es,It,Ko) (Rev 2) Decrypted.mp4"):
-    #     if self.mediaPlayer.state() == QMediaPlayer.PlayingState:
-    #         pass
-    #     else:
-    #         self.mediaPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(path)))
-    #         self.mediaPlayer.play()
-    #         self.counter += 1
     
     def play(self, path: str):
         # print("PLAYING FROM" + path)

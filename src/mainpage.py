@@ -11,7 +11,7 @@
 # import buttons_rc
 import os
 import sys
-import threading
+import subprocess
 import json
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
@@ -20,9 +20,13 @@ from PyQt5.QtCore import QDir, Qt, QUrl, QSize
 
 from customWidgets import *
 
+import ctypes
+myappid = u'NitroK.Nitrofly.Frontend.0.5' # arbitrary string
+ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+
 sys.dont_write_bytecode = True
 
-class Ui_MainWindow(object):
+class Ui_MainWindow(QMainWindow):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("Nitrofly")
         MainWindow.resize(800, 600)
@@ -280,7 +284,7 @@ class Ui_MainWindow(object):
         
         print(self.consoleButtons)
     
-    #TODO: implement console/handheld filter
+    # TODO: implement console/handheld filter
     def populate_gallery(self, filter = None):
         self.galleryButtons = {}
         with open("userData/roms.json") as file:
@@ -292,7 +296,6 @@ class Ui_MainWindow(object):
             self.newbtn = GalleryButton(item, self.getMarquee(), self.scrollAreaWidgetContents_2)
             self.gameGrid.addWidget(self.newbtn, row, col, Qt.AlignLeft)
             # self.gameGrid.addWidget(self.newbtn)
-            #TODO: Play specific rom Video
             self.newbtn.clicked.connect(self.newbtn.getRomName)
             self.galleryButtons[item] = self.newbtn
             #TODO: QT wants to stretch widgets when you don't add to specific row
