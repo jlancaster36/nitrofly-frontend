@@ -19,6 +19,7 @@ from PyQt5.QtMultimediaWidgets import QVideoWidget
 from PyQt5.QtCore import QDir, Qt, QUrl, QSize
 
 from customWidgets import *
+from userData import *
 
 import ctypes
 myappid = u'NitroK.Nitrofly.Frontend.0.5' # arbitrary string
@@ -139,11 +140,13 @@ class Ui_MainWindow(QMainWindow):
 
         self.horizontalLayout_5.addWidget(self.settings)
         self.files = QtWidgets.QPushButton(self.subtoolbar)
-        self.files.setStyleSheet("background: transparent;\n"
-"qproperty-icon: url(assets/buttons/file-icon.png);")
+        self.files.setStyleSheet(
+            "QPushButton{qproperty-icon: url(assets/buttons/file-icon.png);}" 
+            "QPushButton::hover {background-color : rgba(0, 0, 0, .5);}")
         self.files.setText("")
         self.files.setIconSize(QtCore.QSize(24, 24))
         self.files.setObjectName("files")
+        self.files.clicked.connect(self.selectRomDir)
         self.horizontalLayout_5.addWidget(self.files)
 
         self.emulators = QtWidgets.QPushButton(self.subtoolbar)
@@ -347,6 +350,9 @@ class Ui_MainWindow(QMainWindow):
     
     def getMarquee(self):
         return (self.mediaLabel, self.rtLabel, self.videos)
+
+    def selectRomDir(self):
+        selectDirectory(self)
 
 if __name__ == '__main__':
     import sys

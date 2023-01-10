@@ -3,7 +3,7 @@ import os
 
 def getFileCount():
     # folder path
-    dir_path = r'D:\ROMS\GCN\rr-nintendo-gamecube-2\usa'
+    dir_path = r'D:\ROMS\PS2\ps2usaredump1'
     count = 0
     # Iterate directory
     for path in os.listdir(dir_path):
@@ -13,14 +13,13 @@ def getFileCount():
     print('File count:', count)
     return count
 
-while(getFileCount() <= 894):
+while(getFileCount() <= 706):
     try: 
-        download("rr-nintendo-gamecube-2", files="/usa",
+        download("ps2usaredump1", files="/usa",
             verbose = True, 
-            destdir="D:\ROMS\GCN",
+            destdir="D:\ROMS\PS2",
             formats="7z"
-            )
-        pass
+            )  
     except:
         print("ERROR: Script Crashed Restarting")
     
