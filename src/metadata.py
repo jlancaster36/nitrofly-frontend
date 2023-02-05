@@ -37,6 +37,7 @@ def setup_text(title):
 def setup_other(title):
     pass
 
+
 def test_endpoint(filename: str):
     search = filter_title(filename)
     base =  f"https://api.rawg.io/api/games{search}/movies"
@@ -107,6 +108,13 @@ def getGameVideo(platform, name):
     #TODO: Download screen scraper gamelists and use as lookup table for game ID
     url = 'https://www.screenscraper.fr/gameinfos.php?plateforme=13&gameid=4798'
 # https://api.rawg.io/docs/#operation/games_movies_read
+
+# For a possible webscrape solutions:
+    # https://www.igdb.com/games/super-metroid
+        # API Link: https://api-docs.igdb.com/#about
+    # https://www.gamesdatabase.org/all_videos
+    # each gamepage has boxart, support, and video
+
 
 # test_endpoint('Metroid - Zero Mission (U) [!].gba')\
 id = IGDBSearch('Mario Superstar Baseball (USA).iso')
