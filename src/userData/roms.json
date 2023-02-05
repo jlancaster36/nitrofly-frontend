@@ -8,7 +8,6 @@
         "support": true,
         "alias": "None"
     },
-
     "Fire Emblem - Awakening (USA) Decrypted": {
         "system": "3DS",
         "path": "None",
@@ -18,7 +17,6 @@
         "support": true,
         "alias": "None"
     },
-
     "Legend of Zelda, The - Twilight Princess (USA)": {
         "system": "GCN",
         "path": "None",
@@ -28,10 +26,18 @@
         "support": true,
         "alias": "None"
     },
-
     "Super Mario Strikers (USA).nkit": {
         "system": "GCN",
         "path": "None",
+        "has_video": true,
+        "box2d": true,
+        "box3d": true,
+        "support": true,
+        "alias": "None"
+    },
+    "Metroid - Zero Mission (U) [!]": {
+        "system": "GBA",
+        "path": "C:/Projects/Nitrofly/nitrofly-frontend/testRomPath/GBA/Metroid - Zero Mission (U) [!].gba",
         "has_video": true,
         "box2d": true,
         "box3d": true,

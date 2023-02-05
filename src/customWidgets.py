@@ -121,14 +121,6 @@ class VideoPlayer(QWidget):
         self.graphicsView.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.graphicsView.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         # self.resizeContent()
-
-    # def play(self, path="C:/Projects/ROM DUMP/3DS/3DSmedia/videos/Pokemon Alpha Sapphire (USA) (En,Ja,Fr,De,Es,It,Ko) (Rev 2) Decrypted.mp4"):
-    #     if self.mediaPlayer.state() == QMediaPlayer.PlayingState:
-    #         pass
-    #     else:
-    #         self.mediaPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(path)))
-    #         self.mediaPlayer.play()
-    #         self.counter += 1
     
     def play(self, path: str):
         # print("PLAYING FROM" + path)
@@ -245,6 +237,8 @@ class GalleryButton(QtWidgets.QPushButton):
 
         path     = self.paths[self.type] + "/" + self.name + ".png"
         suppPath = self.paths[GalleryImage.SUPPORT] + "/" + self.name + ".png"
+        
+        # TODO: Set image size depending on support image size
         self.setStyleSheet(
                 "QPushButton{"
                     "border-image: url("+suppPath+");"
@@ -252,8 +246,11 @@ class GalleryButton(QtWidgets.QPushButton):
                     "width: 128px;"
                     "height: 128px;"
                     "}")
+                    
         return super().enterEvent(QEvent)
-    
+
+
+    # Resets the size and image of the gallary button when not hovered over
     def leaveEvent(self, QEvent):
         path     = self.paths[self.type] + "/" + self.name + ".png"
         suppPath = self.paths[GalleryImage.SUPPORT] + "/" + self.name + ".png"

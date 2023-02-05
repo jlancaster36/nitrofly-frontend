@@ -8,9 +8,17 @@ Planned feature list
     -Controller and touch screen compatable navigation
     -Configurable music selection (scraped game OSTs?)
     -Simple drag and drop interface to organize your roms
+    +Popular downloads tab
+    +Recently played, oragnized by genre, grouping/playlists
+    
 
 Packages
+  Python
     -PyQt5
+  Javascript
+    -npm firebase
+    -npm xhr2
 
 Dependencies:
     -Windows may require the KLite codec found here: https://www.codecguide.com/download_k-lite_codec_pack_basic.htm
+
