@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE datafile PUBLIC "-//Logiqx//DTD ROM Management Datafile//EN" "http://www.logiqx.com/Dats/datafile.dtd">
+<datafile>
+  <header>
+    <name>Nintendo GameBoy Advance</name>
+    <description>Information from ScreenScraper.fr database</description>
+    <version>1.0</version>
+    <date>1/30/2023 11:27 AM</date>
+    <author>Skraper</author>
+    <url>http://www.screenscraper.fr</url>
+  </header>
+  <game name="metroid : zero mission">
+    <description>She's battled baddies on nearly every Nintendo system, and now, Samus Aran returns to her roots. Metroid: Zero Mission relives the story that started it all--revealing for the first time full details of her meeting with the Metroids. The plotline will be familiar to longtime fans of the Metroid series, but the challenges are new, the power-ups are plentiful, and the graphics and sound are supercharged. Plus, if you thought that the original Metroid had a surprise ending, wait until you get past the Mother Brain in Metroid: Zero Mission. A new twist provides a deeper adventure than ever before.</description>
+    <year>2004</year>
+    <manufacturer>Nintendo</manufacturer>
+    <rom name="GBA\Metroid - Zero Mission (U) [!].gba" size="8388608" />
+  </game>
+</datafile>

@@ -237,6 +237,8 @@ class GalleryButton(QtWidgets.QPushButton):
 
         path     = self.paths[self.type] + "/" + self.name + ".png"
         suppPath = self.paths[GalleryImage.SUPPORT] + "/" + self.name + ".png"
+        
+        # TODO: Set image size depending on support image size
         self.setStyleSheet(
                 "QPushButton{"
                     "border-image: url("+suppPath+");"
@@ -244,8 +246,11 @@ class GalleryButton(QtWidgets.QPushButton):
                     "width: 128px;"
                     "height: 128px;"
                     "}")
+                    
         return super().enterEvent(QEvent)
-    
+
+
+    # Resets the size and image of the gallary button when not hovered over
     def leaveEvent(self, QEvent):
         path     = self.paths[self.type] + "/" + self.name + ".png"
         suppPath = self.paths[GalleryImage.SUPPORT] + "/" + self.name + ".png"

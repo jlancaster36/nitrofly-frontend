@@ -37,34 +37,7 @@
     },
     "Metroid - Zero Mission (U) [!]": {
         "system": "GBA",
-        "path": "C:/Projects/ROM DUMP/GBA/Metroid - Zero Mission (U) [!].gba",
-        "has_video": true,
-        "box2d": true,
-        "box3d": true,
-        "support": true,
-        "alias": "None"
-    },
-    "0755 - Metroid - Fusion (E)(FlashAdvance)": {
-        "system": "GBA",
-        "path": "C:/Projects/ROM DUMP/GBA/0755 - Metroid - Fusion (E)(FlashAdvance).gba",
-        "has_video": true,
-        "box2d": true,
-        "box3d": true,
-        "support": true,
-        "alias": "None"
-    },
-    "Fire Emblem (U) [!]": {
-        "system": "GBA",
-        "path": "C:/Projects/ROM DUMP/GBA/Fire Emblem (U) [!].gba",
-        "has_video": true,
-        "box2d": true,
-        "box3d": true,
-        "support": true,
-        "alias": "None"
-    },
-    "Pokemon - Emerald Version (U)": {
-        "system": "GBA",
-        "path": "C:/Projects/ROM DUMP/GBA/Pokemon - Emerald Version (U).gba",
+        "path": "C:/Projects/Nitrofly/nitrofly-frontend/testRomPath/GBA/Metroid - Zero Mission (U) [!].gba",
         "has_video": true,
         "box2d": true,
         "box3d": true,

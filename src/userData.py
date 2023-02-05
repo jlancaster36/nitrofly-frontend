@@ -17,6 +17,10 @@ def selectDirectory(parent: QWidget):
     dialog = QFileDialog()
     dialog.setFileMode(QFileDialog.Directory)
     path = dialog.getExistingDirectory(parent)
+
+    if path == "":
+        return
+
     print(path)
 
     files = os.listdir(path)
@@ -34,6 +38,8 @@ def storeRomData(dir: list[str], path):
         extension = file.split(".")[-1]
         if extension == "iso":
             #TODO: generate iso dialogue
+            print(f"Found iso {file}, select corrosponding system")
+            # Retreive user input for system
             pass
 
         if extension in extension_table.keys(): 
@@ -47,7 +53,10 @@ def storeRomData(dir: list[str], path):
                 "alias": "None"
                 }
         
-        #TODO: Locate and store metadata locally
+        # TODO: Locate and store metadata locally
+        # Set boolean to false if metadata not found
+
+        # TODO: Re-initialize the gallery to inlcude newly added roms
     
     with open("userData/roms.json", "w") as f:
         json.dump(rom_data, f, indent = 4)
