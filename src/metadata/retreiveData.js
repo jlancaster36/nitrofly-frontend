@@ -2,7 +2,6 @@ import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import {XMLHttpRequest} from "xmlhttprequest";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -20,7 +19,6 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-// var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 /**
  * Construct the file path string used in the reference calls
@@ -54,13 +52,13 @@ function downloadMetadata(name, system, rom = false) {
     const coverRef = ref(storage, paths[0]);
     const videoRef = ref(storage, paths[1]);
     const supportRef = ref(storage, paths[2]);
-    const romRef = ref(storage, paths[3]);
+    // const romRef = ref(storage, paths[3]);
 
     /////////////
 
-    downloadWrapper(coverRef, name + ".png");
-    downloadWrapper(videoRef, name + ".mp4");
-    // downloadWrapper(supportRef);
+    downloadWrapper(coverRef, name + ".png", system, "box2dfront");
+    downloadWrapper(videoRef, name + ".mp4", system, "videos");
+    downloadWrapper(supportRef, name + ".png", system, "support");
     // downloadWrapper(romRef, name + ".gba");
 
 }
@@ -70,17 +68,25 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
-console.log(__filename);
+// console.log(__filename);
 const __dirname = dirname(__filename);
 
-console.log(__dirname);
-function downloadWrapper(ref, name){
+// console.log(__dirname);
+
+/**
+ * A wrapper function to abstract the actual download to passing in a refernces and known data
+ * @param {*} ref The storage reference from Firebase (see ref() method)
+ * @param {*} name Name of the rom as known in Firebase + expected file extension
+ * @param {*} system Usually 3 char string denoting console (e.g. GBA, N64)
+ * @param {*} dataType The kind of metadata we are downloading (box2dfront, videos, support etc.)
+ */
+function downloadWrapper(ref, name, system, dataType){
     getDownloadURL(ref)
     .then((url) => {
         // `url` is the download URL for 'images/stars.jpg'
         // const { DownloaderHelper } = require('node-downloader-helper');
         console.log(url);
-        const dl = new DownloaderHelper(url, __dirname, {fileName: name});
+        const dl = new DownloaderHelper(url, __dirname + "/" + system + "/" + dataType, {fileName: name});
         dl.on("end", () => console.log("Download complete"));
         dl.start();
     })
@@ -93,9 +99,8 @@ function downloadWrapper(ref, name){
 function testDownload(){
     const name = "Metroid - Zero Mission (U) [!]";
     const system = "GBA";
-
     // Should download metadata to the metaData Dir in the app
     downloadMetadata(name, system);
 }
 
-testDownload();
+// testDownload();

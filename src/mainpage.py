@@ -254,22 +254,6 @@ class Ui_MainWindow(QMainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
 
-    def breath_button(self, button):
-        # anim = QtCore.QPropertyAnimation(button, b"geomtery")
-        # anim.setDuration(100)
-        # anim.setStartValue(QtCore.QRect(awidth=32, aheight=32))
-        # anim.setEndValue(QtCore.QRect(awidth=48, aheight=48))
-        # anim.start()
-
-        # anim = QtCore.QPropertyAnimation(button, b"geomtery")
-        # anim.setDuration(100)
-        # anim.setStartValue(QtCore.QRect(awidth=48, aheight=48))
-        # anim.setEndValue(QtCore.QRect(awidth=32, aheight=32))
-        # anim.start()
-        pass
-
-    def slide(self):
-        pass
 
     def populate_consoles(self):
         self.consoleButtons = {}
@@ -293,21 +277,22 @@ class Ui_MainWindow(QMainWindow):
         with open("userData/roms.json") as file:
             gallery = json.load(file)
         
-        row = 0
-        col = 0
+        #Had to be made global to manage grid in other functions
+        self.row = 0
+        self.col = 0
         for item in [i for i in gallery.keys()]:
             self.newbtn = GalleryButton(item, self.getMarquee(), self.scrollAreaWidgetContents_2)
-            self.gameGrid.addWidget(self.newbtn, row, col, Qt.AlignLeft)
+            self.gameGrid.addWidget(self.newbtn, self.row, self.col, Qt.AlignLeft)
             # self.gameGrid.addWidget(self.newbtn)
             self.newbtn.clicked.connect(self.newbtn.getRomName)
             self.galleryButtons[item] = self.newbtn
             #TODO: QT wants to stretch widgets when you don't add to specific row
             # Find a way to set number of cols dynamicly without breaking everything.
             # Right now on a larger screen there's a ton of empty space            
-            col += 1
-            if col % 5 == 0:
-                row += 1
-                col = 0
+            self.col += 1
+            if self.col % 5 == 0:
+                self.row += 1
+                self.col = 0
     
     def filterGallery(self):
         system = self.MainWindow.sender().system
@@ -353,6 +338,33 @@ class Ui_MainWindow(QMainWindow):
 
     def selectRomDir(self):
         selectDirectory(self)
+        # FIXME: Populate gallery does not erase the old buttons when repopulating with new rom data
+        oldGallery = self.galleryButtons.keys()
+        self.softPopulate(oldGallery)
+        self.populate_gallery()
+    
+    # Adds only new elements to gallery given old Gallery keys
+    # TODO: Rewrite the orginal populate gallery function so that we dont need this
+    def softPopulate(self, oldGallery):
+        with open("userData/roms.json") as file:
+            gallery = json.load(file)
+        
+        for item in [i for i in gallery.keys()]:
+            if item not in oldGallery:
+                self.newbtn = GalleryButton(item, self.getMarquee(), self.scrollAreaWidgetContents_2)
+                self.gameGrid.addWidget(self.newbtn, self.row, self.col, Qt.AlignLeft)
+                # self.gameGrid.addWidget(self.newbtn)
+                self.newbtn.clicked.connect(self.newbtn.getRomName)
+                self.galleryButtons[item] = self.newbtn
+                #TODO: QT wants to stretch widgets when you don't add to specific row
+                # Find a way to set number of cols dynamicly without breaking everything.
+                # Right now on a larger screen there's a ton of empty space            
+                self.col += 1
+                if self.col % 5 == 0:
+                    self.row += 1
+                    self.col = 0
+
+
 
 if __name__ == '__main__':
     import sys
