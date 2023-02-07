@@ -82,7 +82,7 @@ def accessFirebase(name: str, system: str):
         "appId": "1:958552361171:web:e633bc03086c8fd7a4ac26",
         "measurementId": "G-Z3NQH7KNGR",
         "databaseURL": "",
-        }
+    }
 
     firebase = Firebase(config)
     storage = firebase.storage()
