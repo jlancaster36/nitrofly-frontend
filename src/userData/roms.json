@@ -40,7 +40,16 @@
         "path": "C:/Projects/Nitrofly/nitrofly-frontend/testRomPath/GBA/Metroid - Zero Mission (U) [!].gba",
         "has_video": true,
         "box2d": true,
-        "box3d": true,
+        "box3d": false,
+        "support": true,
+        "alias": "None"
+    },
+    "Pokemon - Emerald Version (U)": {
+        "system": "GBA",
+        "path": "C:/Projects/Nitrofly/nitrofly-frontend/testRomPath/GBA/Pokemon - Emerald Version (U).gba",
+        "has_video": true,
+        "box2d": true,
+        "box3d": false,
         "support": true,
         "alias": "None"
     }

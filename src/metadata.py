@@ -117,5 +117,5 @@ def getGameVideo(platform, name):
 
 
 # test_endpoint('Metroid - Zero Mission (U) [!].gba')\
-id = IGDBSearch('Mario Superstar Baseball (USA).iso')
-getGameData(id)
+# id = IGDBSearch('Mario Superstar Baseball (USA).iso')
+# getGameData(id)

@@ -1,9 +1,0 @@
-{
-  "dependencies": {
-    "firebase": "^9.16.0",
-    "node-downloader-helper": "^2.1.6",
-    "xhr2": "^0.2.1",
-    "xmlhttprequest": "^1.8.0"
-  },
-  "type": "module"
-}

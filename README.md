@@ -15,6 +15,13 @@ Planned feature list
 Packages
   Python
     -PyQt5
+    -js2py
+    -firebase
+    -python_jwt
+    -gcloud
+    -sseclient
+    -requests-toolbelt
+    -pycryptodome (may need to rename package from crypto to Crypto)
   Javascript
     -npm firebase
     -npm xhr2
